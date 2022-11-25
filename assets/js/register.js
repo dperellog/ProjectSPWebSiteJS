@@ -1,12 +1,16 @@
-import "../../node_modules/flatpickr/dist/flatpickr.js";
-
-flatpickr('#age')
+'use strict';
+//Mòdul que genera i verifica el formulari de registre.
 
 export{
     formHtml,
     initFormChecking
 }
 
+//Variables del mòdul.
+let formCorrect = true
+let formValues = {}
+
+//Esquelet del formulari:
 let formHtml = `
     <form action="#" method="POST" class="col" id="register-form" novalidate>
         <div class="form-group row mb-2">
@@ -58,20 +62,21 @@ let formHtml = `
     </form>
 `;
 
-let formCorrect = true
-let formValues = {}
-
+//Funció que habilita el dinamisme del formulari.
 function initFormChecking(){
 
     let form = document.querySelector('#register-form');
+
+    //JSON que guarda si els camps s'han validat correctament o no.
     let inputs = {name : false, surname : false, email : false, gender : false, birth : false}
 
+    //A l'haver una modificació dins del formulari:
     form.addEventListener('change', e => {
 
-        //Validate data:
+        //Validar dades:
         inputs[e.target.id] = formChecker(e.target)
 
-        //Check inputs:
+        //Comprovar si tots els inputs són correctes i actualitzar el booleà:
         formCorrect = true
         Object.keys(inputs).forEach(k => {
             if (!inputs[k]){
@@ -80,17 +85,17 @@ function initFormChecking(){
         });
 
         
-        //Habilitar el botó si tot és correcte
+        //Si el booleà de formulari correcte està actiu, habilitar el botó d'enviament de formulari.
         if (formCorrect) {
             document.getElementById('submitBtn').disabled = false;
 
         }else{
             document.getElementById('submitBtn').disabled = true;
         }
-
     })
     
-    //Al clicar el botó, enviar al backend:
+
+    //Al clicar el botó submit, enviar dades al backend:
     document.getElementById('submitBtn').addEventListener('click', (e)=>{
         e.preventDefault()
         e.stopPropagation()
@@ -99,13 +104,19 @@ function initFormChecking(){
     })
 }
 
+//Funció que verifica el camp que se li passa.
 function formChecker(target){
+    //Element que mostra el feedback:
     let rNode = document.createElement('div')
     let responseTxt = '';
+
+    //Booleà que marca si el camp és correcte o no.
     let valid = true;
 
+    //Variable que guarda el valor del camp.
     let value = target.value;
 
+    //Segons el camp a validar, executa la peça de codi que el valida:
     switch (target.id) {
         case 'name':
             valid= /^[a-zA-Z àáèéíòóúüçñ·.]+$/.test(value)
@@ -114,7 +125,6 @@ function formChecker(target){
             break;
 
         case 'surname':
-            
             valid= /^[a-zA-Z àáèéíòóúüçñ·.]+$/.test(value)
             responseTxt=valid ? "Cognoms vàlids" : "Cognoms invàlids!";
             valid ? formValues['surname'] = value : null;
@@ -145,6 +155,7 @@ function formChecker(target){
                 responseTxt= "Data de naixement vàlida!";
                 formValues['birth'] = value;
 
+                //Si la data de naixement és vàlida, calcular l'edat i mostrar-la al seu camp.
                 let edat = new Date().getFullYear() - new Date(value).getFullYear();
 
                 document.getElementById('age').value = `${edat} anys`;
@@ -159,6 +170,7 @@ function formChecker(target){
         break;
     }
 
+    //Modificar HTML del camp per mostrar el feedback (Validation Bootstrap): 
     rNode.innerText=responseTxt;
     rNode.className= valid ? "valid-feedback" : "invalid-feedback";
 
@@ -168,14 +180,17 @@ function formChecker(target){
     target.classList.add(valid ? 'is-valid' : 'is-invalid');
     target.parentNode.parentNode.classList.add(valid ? 'is-valid' : 'is-invalid');
     
+    //Eliminar feedback anterior per evitar que es dupliqui.
     target.parentNode.childNodes.length > 3 ? target.parentNode.removeChild(target.parentNode.lastElementChild) : null;
     
     target.parentNode.appendChild(rNode)
     return valid
 }
 
+//Funció que envia les dades a una API backend.
 const sendDataToBackend = (dadesForm) => {
 
+    //Enviar dades per POST.
     fetch('https://app.fakejson.com/q', {
     method: 'POST',
     headers: {
@@ -195,6 +210,8 @@ const sendDataToBackend = (dadesForm) => {
 
     .then((response) => response.json())
     .then((data) => {
+
+        //Si les dades s'han enviat correctament, mostrar per pantalla missatge de confirmació.
         document.getElementById('register-form').appendChild(Object.assign(
             document.createElement('div'),
             {classList : 'alert alert-success', innerText : 'Dades enviades correctament!'}

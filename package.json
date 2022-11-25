@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "analog-clock": "^1.0.0",
-    "flatpickr": "^4.6.13",
     "tiny-slider": "^2.9.4"
   }
 }
