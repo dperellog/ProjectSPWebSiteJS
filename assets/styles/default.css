@@ -1,0 +1,96 @@
+.main-container{
+    margin: 1em 10em;
+}
+
+.page-title h1{
+    padding: 10px;
+    letter-spacing: 3px;
+    padding: 0.5em 1em;
+}
+
+.colors-menu{
+    position: fixed;
+    left: 1em;
+    display: flex;
+    flex-direction : column;
+}
+
+.colors-menu button{
+    margin-bottom: 0.5em;
+    height: 1.5em;
+    width: 1.5em;
+
+    border-radius: 3px;
+    border-color: rgb(218, 218, 218);
+}
+
+.footer-container{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7)
+}
+
+.footer-container a{
+    color: white;    
+}
+
+.main-slider{
+    border: 4px white solid;
+}
+
+.main-slider div{
+    height: 25em;
+    overflow: hidden;
+}
+
+.main-slider img{
+    width: 100%;
+}
+
+.tns-nav{
+    text-align: center;
+    margin-top: 1em;
+}
+
+.tns-nav button{
+    background-color: lightgrey;
+    border-radius: 50%;
+    width: 5px;
+    height: 13px;
+    border: 0px;
+    margin-right: 0.6em;
+}
+
+.tns-nav .tns-nav-active{
+    background-color: rgb(92, 92, 92);
+}
+
+.posts-container .col{
+    z-index: 1;
+}
+
+.miniWindow{
+    position: absolute;
+    bottom: 3em;
+    left: 2em;
+    z-index: 100;
+
+    padding-top: 0.3em;
+    background-color: white;
+    border: 1px black solid;
+    min-width: 20em;
+    min-height: 8em;
+}
+
+.close-button{
+    border: 0px;
+    
+}
+
+.close-button .loading-spinner{
+    margin: 4em auto 0em;
+}
+
+analog-clock{
+    width: 15em;
+    height: 15em;
+}

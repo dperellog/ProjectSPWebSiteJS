@@ -1,0 +1,17 @@
+{
+  "name": "projecte-spwebsite",
+  "version": "1.0.0",
+  "description": "Projecte UF2 de M6",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "live-server"
+  },
+  "author": "David Perello",
+  "license": "ISC",
+  "dependencies": {
+    "analog-clock": "^1.0.0",
+    "flatpickr": "^4.6.13",
+    "tiny-slider": "^2.9.4"
+  }
+}
