@@ -189,7 +189,10 @@ function formChecker(target){
 
 //Funció que envia les dades a una API backend.
 const sendDataToBackend = (dadesForm) => {
-
+    document.getElementById('submitBtn').parentNode.appendChild(Object.assign(
+        document.createElement('div'),
+        {classList : 'spinner-border text-info', role : 'status', id:'loading-submit'}
+    ))
     //Enviar dades per POST.
     fetch('https://app.fakejson.com/q', {
     method: 'POST',
@@ -210,6 +213,8 @@ const sendDataToBackend = (dadesForm) => {
 
     .then((response) => response.json())
     .then((data) => {
+
+        document.getElementById('loading-submit').remove()
 
         //Si les dades s'han enviat correctament, mostrar per pantalla missatge de confirmació.
         document.getElementById('register-form').appendChild(Object.assign(
